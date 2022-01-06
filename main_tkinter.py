@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import random
-lololololololololololololololololol fuck fuckf cukf cukfck fuck
+my asshole is bleached
 # Lists of submssions based on body part and difficulty
 # Might be able to compile body part and difficulty into same list instead NESTED LISTS
 arm = [
