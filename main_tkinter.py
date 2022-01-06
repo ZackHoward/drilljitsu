@@ -1,9 +1,38 @@
+# Look into "list comprehension"
+# Might be able to compile body part and difficulty into same list instead (NESTED LISTS)
+
 from tkinter import *
 from tkinter import ttk
 import random
-my asshole is pretty clean
-# Lists of submssions based on body part and difficulty
-# Might be able to compile body part and difficulty into same list instead NESTED LISTS
+
+root = Tk()
+root.title("Drill-Jitsu")
+
+mainframe = ttk.Frame(root, padding = '3 3 12 12')
+mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S))
+root.columnconfigure(0, weight = 1)
+root.rowconfigure(0, weight = 1)
+
+option_menu = ['all', 'arm', 'leg', 'neck', 'beginner', 'intermediate', 'hard']
+body_part = StringVar()
+body_part_menu = ttk.OptionMenu(mainframe, textvariable = body_part, value = 'all', *option_menu) # this is not working
+#body_part_entry = ttk.Entry(mainframe, width = 10, cursor = 'pirate', textvariable = body_part)
+body_part_menu.grid(column = 3, row = 1, sticky = (W, E))
+
+submission = StringVar()
+ttk.Label(mainframe, textvariable = submission).grid(column = 3, row = 4, stick = (W, E))
+
+ttk.Label(mainframe, text = 'Enter body part or difficulty').grid(column = 2, row = 1, sticky = W)
+
+ttk.Button(mainframe, text = 'DRILL', command = lambda:[(practice_submission_body(), practice_submission_difficulty())]).grid(column = 2, row = 4, sticky = W)
+
+for child in mainframe.winfo_children(): 
+    child.grid_configure(padx = 5, pady = 5)
+
+body_part_menu.focus()
+#root.bind('<Return>', submission)
+
+# Lists of submissions based on body part and difficulty
 arm = [
     'Straight Armbar', 'Americana Armbar', 'Kimura Armlock', 'Biceps Slicer', 'Omoplata', 'Wristlock', 'Inverse Armbar', 'Marceloplata', 'Baratoplata', 'Monoplata', 'Mir Lock', 'Hammerlock' 
 ]
@@ -77,41 +106,5 @@ def remove_submission():
         return neck.remove(remove_which)
     else:
         return 'The submission you entered is not in the application.'
-    
-root = Tk()
-root.title("Drill-Jitsu")
-
-mainframe = ttk.Frame(root, padding = '3 3 12 12')
-mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S))
-root.columnconfigure(0, weight = 1)
-root.rowconfigure(0, weight = 1)
-
-body_part = StringVar()
-body_part_entry = ttk.Entry(mainframe, width = 10, cursor = 'pirate', textvariable = body_part)
-body_part_entry.grid(column = 3, row = 1, sticky = (W, E))
-
-#difficulty = StringVar()
-#difficulty_entry = ttk.Entry(mainframe, width = 10, cursor = 'pirate', textvariable = difficulty)
-#difficulty_entry.grid(column = 3, row = 3, sticky = (W, E))
-
-submission = StringVar()
-ttk.Label(mainframe, textvariable = submission).grid(column = 3, row = 4, stick = (W, E))
-
-ttk.Label(mainframe, text = 'Enter body part or difficulty').grid(column = 2, row = 1, sticky = W)
-
-#ttk.Label(mainframe, text = 'or').grid(column = 2, row = 2, sticky = W)
-
-#ttk.Label(mainframe, text = 'Enter difficulty').grid(column = 2, row = 3, sticky = W)
-
-ttk.Button(mainframe, text = 'DRILL', command = lambda:[(practice_submission_body(), practice_submission_difficulty())]).grid(column = 2, row = 4, sticky = W)
-
-# Look into "list comprehension"
-# Look into OOP for adding and removing moves
-
-for child in mainframe.winfo_children(): 
-    child.grid_configure(padx = 5, pady = 5)
-
-body_part_entry.focus()
-root.bind('<Return>', submission)
 
 root.mainloop()
