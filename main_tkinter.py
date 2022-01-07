@@ -13,24 +13,22 @@ mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S))
 root.columnconfigure(0, weight = 1)
 root.rowconfigure(0, weight = 1)
 
-option_menu = ['all', 'arm', 'leg', 'neck', 'beginner', 'intermediate', 'hard']
-body_part = StringVar()
-body_part_menu = ttk.OptionMenu(mainframe, textvariable = body_part, value = 'all', *option_menu) # this is not working
-#body_part_entry = ttk.Entry(mainframe, width = 10, cursor = 'pirate', textvariable = body_part)
-body_part_menu.grid(column = 3, row = 1, sticky = (W, E))
+submission_list = StringVar()
+submission_list.set('All')
+drop_menu = OptionMenu(mainframe, submission_list, 'All', 'Arm', 'Leg', 'Neck', 'Beginner', 'Intermediate', 'Hard' )
+drop_menu.grid(column = 3, row = 1, sticky = (W, E))
 
 submission = StringVar()
-ttk.Label(mainframe, textvariable = submission).grid(column = 3, row = 4, stick = (W, E))
+output_submission = ttk.Label(mainframe, textvariable = submission, borderwidth = 4, width = 22, relief = 'groove').grid(column = 3, row = 4, stick = (W, E))
 
-ttk.Label(mainframe, text = 'Enter body part or difficulty').grid(column = 2, row = 1, sticky = W)
+selection_label = ttk.Label(mainframe, text = 'Select body part or difficulty').grid(column = 2, row = 1, sticky = W)
 
-ttk.Button(mainframe, text = 'DRILL', command = lambda:[(practice_submission_body(), practice_submission_difficulty())]).grid(column = 2, row = 4, sticky = W)
+drill_button = ttk.Button(mainframe, text = 'DRILL', command = lambda:[(practice_submission_body(), practice_submission_difficulty())]).grid(column = 2, row = 4, sticky = W)
 
 for child in mainframe.winfo_children(): 
     child.grid_configure(padx = 5, pady = 5)
 
-body_part_menu.focus()
-#root.bind('<Return>', submission)
+drop_menu.focus()
 
 # Lists of submissions based on body part and difficulty
 arm = [
@@ -59,26 +57,26 @@ beginner = ['Straight Armbar', 'Americana Armbar', 'Kimura Armlock', 'Rear Naked
 
 # Function for generating a random submission to practice; removes random submission from lists after
 def practice_submission_body():
-    body_parts = body_part.get()
-    if body_parts == 'all':
+    body_part = submission_list.get()
+    if body_part == 'All':
         return submission.set(random.choice(arm + leg + neck))
-    elif body_parts == 'arm':
+    elif body_part == 'Arm':
         return submission.set(random.choice(arm))
-    elif body_parts == 'leg':
+    elif body_part == 'Leg':
         return submission.set(random.choice(leg))
-    elif body_parts == 'neck':
+    elif body_part == 'Neck':
         return submission.set(random.choice(neck))
     else:
         return
 
 # Function for generating a random submission based on difficulty
 def practice_submission_difficulty():
-    difficulty = body_part.get()
-    if difficulty == 'beginner':
+    difficulty = submission_list.get()
+    if difficulty == 'Beginner':
         return submission.set(random.choice(beginner))
-    elif difficulty == 'intermediate':
+    elif difficulty == 'Intermediate':
         return submission.set(random.choice(intermediate))
-    elif difficulty == 'hard':
+    elif difficulty == 'Hard':
         return submission.set(random.choice(hard))
     else:
         return
