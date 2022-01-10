@@ -4,6 +4,9 @@
 from tkinter import *
 from tkinter import ttk
 import random
+import urllib.request
+import re
+import webbrowser
 
 root = Tk()
 root.title("Drill-Jitsu")
@@ -24,6 +27,8 @@ output_submission = ttk.Label(mainframe, textvariable = submission, borderwidth 
 selection_label = ttk.Label(mainframe, text = 'Select body part or difficulty').grid(column = 2, row = 1, sticky = W)
 
 drill_button = ttk.Button(mainframe, text = 'DRILL', command = lambda:[(practice_submission_body(), practice_submission_difficulty())]).grid(column = 2, row = 4, sticky = W)
+
+search_youtube_button = ttk.Button(mainframe, text = 'LEARN', command = lambda: search_youtube()).grid(column = 2, row = 5, sticky = W)
 
 for child in mainframe.winfo_children(): 
     child.grid_configure(padx = 5, pady = 5)
@@ -104,5 +109,12 @@ def remove_submission():
         return neck.remove(remove_which)
     else:
         return 'The submission you entered is not in the application.'
+    
+def search_youtube():
+    def urlify(s):
+        s = re.sub(r"\s+", '+', s) 
+        return s   
+    no_space_submission = urlify(submission.get())
+    webbrowser.open('https://www.youtube.com/results?search_query=BJJ+' + str(no_space_submission))
 
 root.mainloop()
