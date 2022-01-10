@@ -115,6 +115,6 @@ def search_youtube():
         s = re.sub(r"\s+", '+', s) 
         return s   
     no_space_submission = urlify(submission.get())
-    webbrowser.open('https://www.youtube.com/results?search_query=BJJ+' + str(no_space_submission))
+    webbrowser.open('https://www.youtube.com/results?search_query=' + no_space_submission)
 
 root.mainloop()
