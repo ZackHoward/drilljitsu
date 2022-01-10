@@ -4,12 +4,14 @@
 from tkinter import *
 from tkinter import ttk
 import random
-import urllib.request
 import re
 import webbrowser
 
 root = Tk()
 root.title("Drill-Jitsu")
+root.iconbitmap(r"C:\Users\zhowa\Desktop\Code\Projects\Drilljitsu\drilljitsu_icon.ico")
+
+tabs = ttk.Notebook(root)
 
 mainframe = ttk.Frame(root, padding = '3 3 12 12')
 mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S))
@@ -19,21 +21,32 @@ root.rowconfigure(0, weight = 1)
 submission_list = StringVar()
 submission_list.set('All')
 drop_menu = OptionMenu(mainframe, submission_list, 'All', 'Arm', 'Leg', 'Neck', 'Beginner', 'Intermediate', 'Hard' )
-drop_menu.grid(column = 3, row = 1, sticky = (W, E))
+drop_menu.grid(column = 3, row = 1, sticky = W)
+
 
 submission = StringVar()
-output_submission = ttk.Label(mainframe, textvariable = submission, borderwidth = 4, width = 22, relief = 'groove').grid(column = 3, row = 4, stick = (W, E))
+output_submission = ttk.Label(mainframe, textvariable = submission, font = 8, borderwidth = 4, width = 22).grid(column = 3, row = 4, stick = (W, E))
 
 selection_label = ttk.Label(mainframe, text = 'Select body part or difficulty').grid(column = 2, row = 1, sticky = W)
 
-drill_button = ttk.Button(mainframe, text = 'DRILL', command = lambda:[(practice_submission_body(), practice_submission_difficulty())]).grid(column = 2, row = 4, sticky = W)
+drill_button = ttk.Button(mainframe, text = 'DRILL', width = 20, command = lambda:[(practice_submission_body(), practice_submission_difficulty())]).grid(column = 2, row = 4, sticky = W)
 
-search_youtube_button = ttk.Button(mainframe, text = 'LEARN', command = lambda: search_youtube()).grid(column = 2, row = 5, sticky = W)
+search_youtube_button = ttk.Button(mainframe, text = 'LEARN', width = 20, command = lambda: search_youtube()).grid(column = 2, row = 5, sticky = W)
+
+youtube_label = ttk.Label(mainframe, text = 'Click LEARN to search above submission').grid(column = 3, row = 5, sticky = (W, E))
 
 for child in mainframe.winfo_children(): 
     child.grid_configure(padx = 5, pady = 5)
 
 drop_menu.focus()
+
+#add_remove_frame = ttk.Frame(root, padding = '3 3 12 12')
+#add_remove_frame.grid(column = 0, row = 0, sticky = (N, W, E, S))
+#root.columnconfigure(0, weight = 1)
+#root.rowconfigure(0, weight = 1)
+
+#tabs.add(mainframe, text = 'Main')
+#tabs.add(add_remove_frame, text = 'Main')
 
 # Lists of submissions based on body part and difficulty
 arm = [
