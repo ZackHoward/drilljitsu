@@ -13,40 +13,42 @@ root.iconbitmap(r"C:\Users\zhowa\Desktop\Code\Projects\Drilljitsu\drilljitsu_ico
 
 tabs = ttk.Notebook(root)
 
-mainframe = ttk.Frame(root, padding = '3 3 12 12')
-mainframe.grid(column = 0, row = 0, sticky = (N, W, E, S))
+tab1 = ttk.Frame(tabs, padding = '3 3 12 12')
+tab1.grid(column = 0, row = 0, sticky = (N, W, E, S))
+
+tab2 = ttk.Frame(tabs, padding = '3 3 12 12')
+tab2.grid(column = 0, row = 0, sticky = (N, W, E, S))
+
+tabs.add(tab1, text = 'App')
+tabs.add(tab2, text = 'Settings')
+tabs.pack(expand = 1, fill = 'both')
+
 root.columnconfigure(0, weight = 1)
 root.rowconfigure(0, weight = 1)
 
 submission_list = StringVar()
 submission_list.set('All')
-drop_menu = OptionMenu(mainframe, submission_list, 'All', 'Arm', 'Leg', 'Neck', 'Beginner', 'Intermediate', 'Hard' )
+drop_menu = OptionMenu(tab1, submission_list, 'All', 'Arm', 'Leg', 'Neck', 'Beginner', 'Intermediate', 'Hard')
 drop_menu.grid(column = 3, row = 1, sticky = W)
 
-
 submission = StringVar()
-output_submission = ttk.Label(mainframe, textvariable = submission, font = 8, borderwidth = 4, width = 22).grid(column = 3, row = 4, stick = (W, E))
+output_submission = ttk.Label(tab1, textvariable = submission, font = 8, borderwidth = 4, width = 19).grid(column = 3, row = 4, stick = (W, E))
 
-selection_label = ttk.Label(mainframe, text = 'Select body part or difficulty').grid(column = 2, row = 1, sticky = W)
+selection_label = ttk.Label(tab1, text = 'Select body part or difficulty').grid(column = 2, row = 1, sticky = W)
 
-drill_button = ttk.Button(mainframe, text = 'DRILL', width = 20, command = lambda:[(practice_submission_body(), practice_submission_difficulty())]).grid(column = 2, row = 4, sticky = W)
+drill_button = ttk.Button(tab1, text = 'DRILL', width = 20, command = lambda:[(practice_submission_body(), practice_submission_difficulty())]).grid(column = 2, row = 4, sticky = W)
 
-search_youtube_button = ttk.Button(mainframe, text = 'LEARN', width = 20, command = lambda: search_youtube()).grid(column = 2, row = 5, sticky = W)
+search_youtube_button = ttk.Button(tab1, text = 'LEARN', width = 20, command = lambda: search_youtube()).grid(column = 2, row = 5, sticky = W)
 
-youtube_label = ttk.Label(mainframe, text = 'Click LEARN to search above submission').grid(column = 3, row = 5, sticky = (W, E))
+youtube_label = ttk.Label(tab1, text = 'Click LEARN!').grid(column = 3, row = 5, sticky = (W, E))
 
-for child in mainframe.winfo_children(): 
+for child in tab1.winfo_children(): 
+    child.grid_configure(padx = 5, pady = 5)
+    
+for child in tab2.winfo_children(): 
     child.grid_configure(padx = 5, pady = 5)
 
 drop_menu.focus()
-
-#add_remove_frame = ttk.Frame(root, padding = '3 3 12 12')
-#add_remove_frame.grid(column = 0, row = 0, sticky = (N, W, E, S))
-#root.columnconfigure(0, weight = 1)
-#root.rowconfigure(0, weight = 1)
-
-#tabs.add(mainframe, text = 'Main')
-#tabs.add(add_remove_frame, text = 'Main')
 
 # Lists of submissions based on body part and difficulty
 arm = [
@@ -60,6 +62,11 @@ leg = [
 neck = [
     'Rear Naked Choke', 'Triangle Choke', 'Bow and Arrow Choke', 'Ezekiel Choke', 'Guillotine', 'Cross Collar Choke', 'Short Choke', 'Baseball Choke', 'D\'Arce Choke', 'Head and Arm Choke', 'North-South Choke', 'Crucifix Choke', 'Thrust Choke', 'Anaconda Choke', 'Neck Crank', 'Twister', 'Peruvian Necktie', 'Loop Choke', 'Papercutter Choke', 'Gogoplata', 'Step Over Choke', 'Von Flue Choke', 'Lapel Half Nelson'
 ]
+
+list_of_submissions = Listbox(tab2, height = 7, width = 25, bg = 'white', activestyle = 'dotbox')
+list_of_submissions.grid(column = 3, row = 1, sticky = W)
+for c in arm + leg + neck:
+    list_of_submissions.insert(END, c)
 
 hard = ['Biceps Slicer', 'Marceloplata', 'Baratoplata', 'Monoplata', 'Hammerlock', 'Knee Slicer', 'Reverse Heel Hook', 'Banana Split Hip Lock', 'Crucifix Choke', 'Anaconda Choke', 'Peruvian Necktie', 'Gogoplata', 'Step Over Choke', 'Von Flue Choke', 'Lapel Half Nelson'
     
